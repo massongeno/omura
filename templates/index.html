@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href = "{{url_for("static", filename = "style.css")}}">
+	</head>
+	<body>
+		{% for message in get_flashed_messages() %}
+			<h1 id="msg">{{message}}</h1>
+		{% endfor %}
+		{% for container in container_list %}
+			<h1 id="id">id: {{container.id}}</h1>
+			<p id="image">image: {{container.image}}</h1>
+			<p id="cmd">cmd: {{container.cmd}}</h1>
+			<p id="created">created: {{container.created}}</h1>
+			<p id="status">status: {{container.status}}</h1>
+			<p id="ports">ports: {{container.ports}}</h1>
+			<p id="name">name: {{container.name}}</h1>
+		{% endfor %}
+	</body>
