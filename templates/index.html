@@ -26,6 +26,10 @@
 				<form action="/start_container" method="POST">
 					<button type="submit" name="action" value="{{container.name}}">start</button>
 				</form>
+			{% elif container.status=="created" %}
+				<form action="/start_container" method="POST">
+					<button type="submit" name="action" value="{{container.name}}">start</button>
+				</form>
 			{% endif %}
 		{% endfor %}
 	</body>
