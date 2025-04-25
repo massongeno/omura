@@ -1,4 +1,5 @@
 import docker
+import pprint
 from dataclasses import dataclass
 
 
@@ -59,3 +60,41 @@ class docker_py:
             print(e)
             create_status = "failed"
         return create_status
+
+    def docker_stop(self, name):
+        try:
+            container = self.client.containers.get(name)
+            container.stop()
+            stop_status = "success"
+        except Exception as e:
+            print(e)
+            stop_status = "failed"
+        return stop_status
+
+    def docker_start(self, name):
+        try:
+            container = self.client.containers.get(name)
+            container.start()
+            start_status = "success"
+        except Exception as e:
+            print(e)
+            start_status = "failed"
+        return start_status
+
+    def docker_remove(self, name):
+        try:
+            container = self.client.containers.get(name)
+            container.stop()
+            container.remove()
+            remove_status = "success"
+        except Exception as e:
+            print(e)
+            remove_status = "failed"
+        return remove_status
+
+    def docker_stats(self):
+        try:
+            for i in self.client.containers.list():
+                pprint.pprint(i.stats(stream=False))
+        except Exception as e:
+            print(e)
