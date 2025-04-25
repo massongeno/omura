@@ -2,6 +2,7 @@ import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './App.css';
+import Home from "./pages/home.jsx"
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -55,45 +56,31 @@ function Login() {
   );
 }
 
-function Home() {
-  return (
-    <div>
-      <h2>insert components here</h2>
-    </div>
-  );
-}
-
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   // Check if the user is authenticated when the app loads or if the token changes
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken")
     if (token) {
-      setIsAuthenticated(true);
+      setIsAuthenticated(true)
+    } else {
+      setIsAuthenticated(false)
     }
-  }, []);
+  }, [])
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
-
         <Route path="/login" element={<Login />} />
-
         <Route
           path="/home"
-          element={
-            isAuthenticated || localStorage.getItem('authToken') ? (
-              <Home />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
+          element={isAuthenticated || localStorage.getItem("authToken") ? <Home /> : <Navigate to="/login" />}
         />
       </Routes>
     </Router>
-  );
+  )
 }
 
 export default App;

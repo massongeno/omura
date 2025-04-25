@@ -43,8 +43,10 @@
 
 /* src/App.css */
 .container {
-  background-color: #f0f0f0;
-  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
 form {
