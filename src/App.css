@@ -74,6 +74,18 @@ button {
   cursor: pointer;
 }
 
+.start-button {
+  background-color: #007cdb;
+}
+
+.stop-button {
+  background-color: #004a8a;
+}
+
+.delete-button {
+  background-color: #003270;
+}
+
 button:hover {
   background-color: #0a48ac;
 }

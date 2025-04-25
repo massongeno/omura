@@ -126,16 +126,38 @@ button:focus-visible {
   align-items: center;
 }
 
+.constainer-card.selected{
+  border-color:#0062ff;
+}
+
 .container-labels,
 .container-values {
   display: grid;
-  grid-template-columns: 2fr 2fr .5fr .5fr 1fr .5fr; 
-  gap: 10px;
+  /*grid-template-columns: 2fr 2fr .5fr .5fr 1fr .5fr;*/ 
+  grid-template-columns: minmax(12ch, 1fr) minmax(5ch, 5ch) .3fr minmax(12ch, 1fr) .2fr minmax(12ch, 1fr) minmax(12ch, 1fr) 2fr minmax(6ch, .5fr) minmax(6ch, .5fr)  minmax(6ch, .7fr);
   text-align: left;
   border-radius: 4px;
   color: #ffffff;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  font-size: .8vw;
 }
 
+.container-values{
+  font-family: monospace;
+}
+
+.container-labels {
+  font-weight: bold;
+}
+
+.container-port {
+  font-family: monospace; /* Ensures fixed-width characters */
+  word-break: break-all;  /* Force breaks at any character */
+  white-space: pre-wrap;  /* Preserve spaces but allow wrapping */
+  overflow-wrap: break-word; /* Prevents overflow */
+}
 
 .container-status {
   display: flex;
@@ -163,15 +185,20 @@ button:focus-visible {
   background-color: red;
 }
 
-.container-name {
-  font-weight: bold;
-  color: #ffffff;
-}
-
 .home-header {
   display: flex;
-  align-items: left;
   gap: 10px;
   margin-left: 20px;
+  margin-right: 20px;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.left-buttons,
+.right-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+
 

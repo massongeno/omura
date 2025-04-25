@@ -8,6 +8,7 @@ export default function Home() {
   const [containers, setContainers] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const [selectedIds, setSelectedIds] = useState([]);
 
   const previousContainers = useRef([]);
 
@@ -33,9 +34,31 @@ export default function Home() {
     }
   }
 
+  const formatPort = (port) => {
+    if (!port) return '';
+    const cleanPort = port.replace(/\s/g, '');
+    return cleanPort.match(/.{1,5}/g)?.join(' ') || cleanPort;
+  };
+
+  const handleContainerClick = (id) => {
+    setSelectedIds((prevSelectedIds) => {
+      if (prevSelectedIds.includes(id)) {
+        return prevSelectedIds.filter((selectedId) => selectedId !== id);
+      } else {
+        return [...prevSelectedIds, id];
+      }
+    });
+  };
+
+  const startContainer = async () => {}
+
+  const stopContainer = async () => {}
+
+  const deleteContainer = async () => {}
+
   useEffect(() => {
     fetchContainers()
-    const intervalId = setInterval(fetchContainers, 10000)
+    const intervalId = setInterval(fetchContainers, 3000)
     return () => clearInterval(intervalId)
   }, [])
 
@@ -44,9 +67,22 @@ export default function Home() {
       <Navbar onContainerCreated={fetchContainers} />
       <div className="container">
         <div className="home-header">
-          <button onClick={fetchContainers} style={{ position: 'relative' }}>
-            Refresh
-          </button>
+          <div className="left-buttons">
+            <button onClick={fetchContainers} style={{ position: 'relative' }}>
+              Refresh
+            </button>
+          </div>
+          <div className="right-buttons">
+            <button onClick={startContainer} className="start-button" style={{ position: 'relative' }}>
+              Start
+            </button>
+            <button onClick={stopContainer} className="stop-button" style={{ position: 'relative' }}>
+              Stop
+            </button>
+            <button onClick={deleteContainer} className="delete-button" style={{ position: 'relative' }}>
+              Delete
+            </button>
+          </div>
         </div>
 
         {error && <div className="error-message">{error}</div>}
@@ -54,13 +90,23 @@ export default function Home() {
         <div className="container-grid">
           {containers.length > 0 ? (
             containers.map((container) => (
-              <div key={container.id} className="container-card">
+              <div 
+                key={container.id}
+                className={`container-card ${selectedIds.includes(container.id) ? 'selected' : ''}`}
+                onClick={() => handleContainerClick(container.id)}
+              >
 
                 <div className={`status-dot ${container.status === 'running' ? 'running' : 'stopped'}`}></div>
 
                 <div className="container-labels">
                   <div>Name</div>
+                  <div>Ports</div>
+                  <div></div> {/* gap */}
                   <div>Image</div>
+                  <div></div> {/* gap */}
+                  <div>Command</div>
+                  <div>Date Created</div>
+                  <div></div> {/* gap */}
                   <div>CPU</div>
                   <div>Disk</div>
                   <div>Memory</div>
@@ -68,7 +114,13 @@ export default function Home() {
 
                 <div className="container-values">
                   <div className="container-name">{container.name}</div>
+                  <div className="container-ports">{formatPort(container.port)}</div>
+                  <div></div> {/* gap */}
                   <div className="container-image">{container.image}</div>
+                  <div></div> {/* gap */}
+                  <div className="container-command">{container.command}</div>
+                  <div className="container-created">{container.created}</div>
+                  <div></div> {/* gap */}
                   <div className="container-cpu">{container.cpu}</div>
                   <div className="container-disk">{container.disk}</div>
                   <div className="container-mem">{container.mem}</div>

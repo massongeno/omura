@@ -27,29 +27,38 @@ def containers():
         {
             "id": "1",
             "name": "nginx-web",
+            "command": "/bin/bash",
             "image": "nginx:latest",
+            "created": "DD-MM-YYYY",
             "status": "running",
-            "cpu": "45%",
+            "cpu": "60%",
             "disk": "45%",
-            "mem": "45%"
+            "mem": "45%",
+            "ports": "5000"
         },
         {
             "id": "2",
             "name": "redis-cache",
+            "command": "/bin/bash",
+            "created": "DD-MM-YYYY",
             "image": "redis:7.0",
-            "status": "stopped",
+            "status": "created",
             "cpu": "45%",
             "disk": "45%",
-            "mem": "45%"
+            "mem": "45%",
+            "ports": "5000, 5000, 5000"
         },
         {
             "id": "3",
             "name": "db-service",
+            "command": "/bin/bash",
             "image": "postgres:14",
-            "status": "running",
+            "created": "DD-MM-YYYY",
+            "status": "exited",
             "cpu": "45%",
             "disk": "45%",
-            "mem": "45%"
+            "mem": "45%",
+            "ports": "5000"
         }
     ]
     return jsonify(test_data)
