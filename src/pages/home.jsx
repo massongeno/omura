@@ -50,7 +50,15 @@ export default function Home() {
     });
   };
 
-  const startContainer = async () => {}
+  const startContainer = async () => {
+    selectedIds.forEach(selected => {
+      containers.forEach(container => {
+        if(container.id == selected) {
+          console.log("starting ", container)
+        }
+      });
+    });
+  }
 
   const stopContainer = async () => {}
 

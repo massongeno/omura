@@ -126,10 +126,6 @@ button:focus-visible {
   align-items: center;
 }
 
-.constainer-card.selected{
-  border-color:#0062ff;
-}
-
 .container-labels,
 .container-values {
   display: grid;
