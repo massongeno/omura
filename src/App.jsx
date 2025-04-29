@@ -56,6 +56,57 @@ function Login() {
   );
 }
 
+function Register() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:5000/Register', {
+        username,
+        password,
+      });
+
+      setMessage(response.data.message);
+
+      if (response.data.success) {
+        navigate('/login'); 
+      }
+    } catch (error) {
+      setMessage('Failed to register!');
+    }
+  };
+
+  return (
+    <div>
+      <h1> Create a new account</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button className="button" type="submit">
+          Register
+        </button>
+      </form>
+
+      {message && <p>{message}</p>}
+    </div>
+  );
+}
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
@@ -74,6 +125,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/Register" element={<Register />} />
         <Route
           path="/home"
           element={isAuthenticated || localStorage.getItem("authToken") ? <Home /> : <Navigate to="/login" />}
