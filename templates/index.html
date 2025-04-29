@@ -15,6 +15,11 @@
 			<p id="status">status: {{container.status}}</h1>
 			<p id="ports">ports: {{container.ports}}</h1>
 			<p id="name">name: {{container.name}}</h1>
+
+			<h2>stats</h2>
+			<p id="cpu">cpu: {{container.cpu_usage}}%</h1>
+			<p id="memory">memory: {{container.memory_usage}} GB</h1>
+
 			<form action="/remove_container" method="POST">
 				<button type="submit" name="action" value="{{container.name}}">delete</button>
 			</form>
