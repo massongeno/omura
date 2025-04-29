@@ -46,7 +46,8 @@ class docker_py:
                 cpu_stats = stats["cpu_stats"]
                 cpu_usage = cpu_stats["cpu_usage"]["total_usage"]
                 memory_stats = stats["memory_stats"]
-                memory_usage = memory_stats["total_usage"]
+                mem_stats_stats = memory_stats["stats"]
+                memory_usage = ((memory_stats["usage"] - mem_stats_stats["cache"]) / memory_stats["limit"]) * 100
             else:
                 cpu_usage = 0.0
                 memory_usage = 0.0

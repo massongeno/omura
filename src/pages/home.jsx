@@ -116,22 +116,20 @@ export default function Home() {
                   <div>Date Created</div>
                   <div></div> {/* gap */}
                   <div>CPU</div>
-                  <div>Disk</div>
                   <div>Memory</div>
                 </div>
 
                 <div className="container-values">
                   <div className="container-name">{container.name}</div>
-                  <div className="container-ports">{formatPort(container.port)}</div>
+                  <div className="container-ports">{formatPort(container.ports)}</div>
                   <div></div> {/* gap */}
                   <div className="container-image">{container.image}</div>
                   <div></div> {/* gap */}
-                  <div className="container-command">{container.command}</div>
+                  <div className="container-command">{container.cmd}</div>
                   <div className="container-created">{container.created}</div>
                   <div></div> {/* gap */}
-                  <div className="container-cpu">{container.cpu}</div>
-                  <div className="container-disk">{container.disk}</div>
-                  <div className="container-mem">{container.mem}</div>
+                  <div className="container-cpu">{container.cpu_usage + "%"}</div>
+                  <div className="container-mem">{container.memory_usage + "%"}</div>
                 </div>
 
               </div>
