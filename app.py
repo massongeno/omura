@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request, flash, jsonify
 from flask_cors import CORS
-
+from dataclasses import asdict
 import docker_py
 
 app = Flask(__name__)
@@ -26,13 +26,13 @@ def login():
         return jsonify({"success": False, "message": "Invalid credentials"}), 401
 
 
-@app.route("/", methods=["GET"])
-def home():
+@app.route("/containers", methods=["GET"])
+def containers():
     if request.method == "GET":
         docker_client = docker_py.docker_py()
-        docker_ps = docker_client.docker_ps()
-        docker_client.docker_stats()
-        return render_template("index.html", container_list=docker_ps)
+        docker_ps_stats = docker_client.docker_ps_stats()
+        containers = [asdict(container) for container in docker_ps_stats]
+        return jsonify(containers)
 
 
 @app.route("/create_container", methods=["POST", "GET"])

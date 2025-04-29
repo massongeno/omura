@@ -1,5 +1,4 @@
 import docker
-import pprint
 from dataclasses import dataclass
 
 
@@ -12,13 +11,15 @@ class container_data:
     status: str
     ports: str
     name: str
+    cpu_usage: str
+    memory_usage: str
 
 
 class docker_py:
     def __init__(self):
         self.client = docker.from_env()
 
-    def docker_ps(self):
+    def docker_ps_stats(self):
         container_list = self.client.containers.list(all=True)
         container_list_data = []
         for container in container_list:
@@ -39,15 +40,18 @@ class docker_py:
             else:
                 image = "N/A"
 
-            container_data_instance = container_data(
-                id=container.id[:12],
-                image=image,
-                cmd=cmd,
-                created=created,
-                status=container.status,
-                ports=ports,
-                name=container.name,
-            )
+            stats = container.stats(stream=False)
+            if container.status == "running":
+                stats = container.stats(stream=False)
+                cpu_stats = stats["cpu_stats"]
+                cpu_usage = cpu_stats["cpu_usage"]["total_usage"]
+                memory_stats = stats["memory_stats"]
+                memory_usage = memory_stats["total_usage"]
+            else:
+                cpu_usage = 0.0
+                memory_usage = 0.0
+
+            container_data_instance = container_data(id=container.id[:12], image=image, cmd=cmd, created=created, status=container.status, ports=ports, name=container.name, cpu_usage=cpu_usage, memory_usage=memory_usage)
 
             container_list_data.append(container_data_instance)
         return container_list_data
@@ -91,10 +95,3 @@ class docker_py:
             print(e)
             remove_status = "failed"
         return remove_status
-
-    def docker_stats(self):
-        try:
-            for i in self.client.containers.list():
-                pprint.pprint(i.stats(stream=False))
-        except Exception as e:
-            print(e)
