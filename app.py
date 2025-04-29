@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, flash
+from flask import Flask, redirect, render_template, request, flash, jsonify
 from flask_cors import CORS
 
 import docker_py
@@ -7,7 +7,6 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "TEMP"
 CORS(app)
 
-@app.route('/login', methods=['POST', 'OPTIONS'])
 def login():
     if request.method == 'OPTIONS':
         return jsonify({}), 200
@@ -18,6 +17,13 @@ def login():
         
     username = data.get('username')
     password = data.get('password')
+
+    if username == "admin" and password == "123456":
+        return jsonify({"success": True, "message": "Login successful!", "token": "yourToken"})
+
+    else:
+        return jsonify({"success": False, "message": "Invalid credentials"}), 401
+
 
 @app.route("/", methods=["GET"])
 def home():
@@ -39,8 +45,6 @@ def new_container():
         return redirect("/")
     elif request.method == "GET":
         return render_template("create_container.html")
-    else:
-        return jsonify({"success": False, "message": "Invalid credentials"}), 401
 
 @app.route("/remove_container", methods=["POST"])
 def remove_container():
