@@ -43,7 +43,8 @@ def new_container():
         docker_client = docker_py.docker_py()
         docker_create_msg = docker_client.docker_create(name, img)
         flash(docker_create_msg)
-        return redirect("/")
+        return jsonify({"message": "Container created successfully!"})
+    
     elif request.method == "GET":
         return render_template("create_container.html")
 

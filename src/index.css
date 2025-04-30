@@ -110,11 +110,19 @@ button:focus-visible {
   min-width: 300px;
 }
 
+.container {
+  
+  padding: 20px;
+}
+
 .container-grid {
+  margin-top: 60px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
   padding: 20px;
+  max-height: 70vh;  /* Adjust this value to control the scrollable area height */
+  overflow-y: auto;  /* Enable vertical scrolling */
 }
 
 .container-card {
@@ -124,13 +132,13 @@ button:focus-visible {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border: 1px solid #ddd;
   align-items: center;
+  position: relative;
 }
 
 .container-labels,
 .container-values {
   display: grid;
-  /*grid-template-columns: 2fr 2fr .5fr .5fr 1fr .5fr;*/ 
-  grid-template-columns: minmax(12ch, 1fr) minmax(5ch, 5ch) .3fr minmax(12ch, 1fr) .2fr minmax(12ch, 1fr) minmax(12ch, 1fr) 2fr minmax(6ch, .5fr) minmax(6ch, .5fr)  minmax(6ch, .7fr);
+  grid-template-columns: minmax(12ch, 1.5fr) minmax(4ch, 1fr) .3fr minmax(12ch, 1fr) .2fr minmax(12ch, 1.5fr) minmax(12ch, 1fr) 2fr minmax(6ch, .5fr) minmax(6ch, .5fr)  minmax(6ch, .5fr);
   text-align: left;
   border-radius: 4px;
   color: #ffffff;
@@ -148,11 +156,18 @@ button:focus-visible {
   font-weight: bold;
 }
 
+.container-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 1.5fr;
+}
+
 .container-port {
-  font-family: monospace; /* Ensures fixed-width characters */
-  word-break: break-all;  /* Force breaks at any character */
-  white-space: pre-wrap;  /* Preserve spaces but allow wrapping */
-  overflow-wrap: break-word; /* Prevents overflow */
+  font-family: monospace;
+  word-break: break-all; 
+  white-space: pre-wrap;  
+  overflow-wrap: break-word; 
 }
 
 .container-status {
@@ -171,6 +186,7 @@ button:focus-visible {
   margin-top: 16px; 
   margin-left: -40px;
   position: absolute;
+  left: 20px;
 }
 
 .running {
@@ -183,11 +199,10 @@ button:focus-visible {
 
 .home-header {
   display: flex;
-  gap: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
   justify-content: space-between;
-  align-items: center;
+  position: relative;
+  top: 60px; /* Adjust this value as needed */
+  padding: 10px;
 }
 
 .left-buttons,

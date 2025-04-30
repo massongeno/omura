@@ -44,10 +44,12 @@ class docker_py:
             if container.status == "running":
                 stats = container.stats(stream=False)
                 cpu_stats = stats["cpu_stats"]
-                cpu_usage = cpu_stats["cpu_usage"]["total_usage"]
+                precpu_stats = stats["precpu_stats"]
+                num_cpus = len(cpu_stats["cpu_usage"].get("percpu_usage", [])) or 1
+                cpu_usage = (cpu_stats["cpu_usage"]["total_usage"] - precpu_stats["cpu_usage"]["total_usage"]) * num_cpus * 100.0
                 memory_stats = stats["memory_stats"]
                 mem_stats_stats = memory_stats["stats"]
-                memory_usage = ((memory_stats["usage"] - mem_stats_stats["cache"]) / memory_stats["limit"]) * 100
+                memory_usage = ((memory_stats["usage"] - mem_stats_stats["cache"]) / memory_stats["limit"]) * 100.0
             else:
                 cpu_usage = 0.0
                 memory_usage = 0.0

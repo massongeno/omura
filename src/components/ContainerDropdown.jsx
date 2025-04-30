@@ -40,21 +40,36 @@ export default function CreateContainerDropdown({ onDropdownClicked }) {
 
     try {
       const token = localStorage.getItem("authToken")
-      await axios.post(
-        "http://localhost:5000/containers",
-        { name, image },
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
-      setSuccess("Container created successfully!")
-      setName("")
-      setImage("")
-      if (onDropdownClicked) onDropdownClicked()
+
+      const formData = new URLSearchParams();
+      formData.append("name", name);
+      formData.append("image", image);
+      
+      const response = await axios.post(
+        "http://localhost:5000/create_container",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200 && response.data.message === "Container created successfully!") {
+          setSuccess("Container created successfully!");
+          setName("");
+          setImage("");
+          if (onDropdownClicked) onDropdownClicked();
+        } else {
+          setError(response.data.message || "Failed to create container");
+        }
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to create container")
+      setError(err.response?.data?.message || "Failed to create container");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="dropdown-container">

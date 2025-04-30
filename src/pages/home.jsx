@@ -36,8 +36,8 @@ export default function Home() {
 
   const formatPort = (port) => {
     if (!port) return '';
-    const cleanPort = port.replace(/\s/g, '');
-    return cleanPort.match(/.{1,5}/g)?.join(' ') || cleanPort;
+    const cleanPort = port.replace(/[{}\s]/g, '');
+    return cleanPort.replace(/,/g, '\n');         
   };
 
   const handleContainerClick = (id) => {
@@ -51,19 +51,61 @@ export default function Home() {
   };
 
   const startContainer = async () => {
-    selectedIds.forEach(selected => {
-      containers.forEach(container => {
-        if(container.id == selected) {
-          console.log("starting ", container)
-        }
-      });
-    });
-  }
+    const token = localStorage.getItem("authToken");
+    try {
+      await Promise.all(selectedIds.map(async (id) => {
+        await axios.post("http://localhost:5000/start_container", 
+          new URLSearchParams({ action: id }), {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${token}`
+          }
+        });
+      }));
+      fetchContainers();
+    } catch (error) {
+      console.error("Failed to start container:", error);
+    }
+  };
+  
 
-  const stopContainer = async () => {}
+  const stopContainer = async () => {
+    const token = localStorage.getItem("authToken");
+    try {
+      await Promise.all(selectedIds.map(async (id) => {
+        await axios.post("http://localhost:5000/stop_container", 
+          new URLSearchParams({ action: id }), {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${token}`
+          }
+        });
+      }));
+      fetchContainers();
+    } catch (error) {
+      console.error("Failed to stop container:", error);
+    }
+  };
+  
 
-  const deleteContainer = async () => {}
-
+  const deleteContainer = async () => {
+    const token = localStorage.getItem("authToken");
+    try {
+      await Promise.all(selectedIds.map(async (id) => {
+        await axios.post("http://localhost:5000/remove_container", 
+          new URLSearchParams({ action: id }), {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${token}`
+          }
+        });
+      }));
+      fetchContainers();
+    } catch (error) {
+      console.error("Failed to delete container:", error);
+    }
+  };
+  
   useEffect(() => {
     fetchContainers()
     const intervalId = setInterval(fetchContainers, 3000)
@@ -128,8 +170,8 @@ export default function Home() {
                   <div className="container-command">{container.cmd}</div>
                   <div className="container-created">{container.created}</div>
                   <div></div> {/* gap */}
-                  <div className="container-cpu">{container.cpu_usage + "%"}</div>
-                  <div className="container-mem">{container.memory_usage + "%"}</div>
+                  <div className="container-cpu">{parseFloat(container.cpu_usage).toFixed(2) + "%"}</div>
+                  <div className="container-mem">{parseFloat(container.memory_usage).toFixed(2) + "%"}</div>
                 </div>
 
               </div>
