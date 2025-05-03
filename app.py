@@ -2,6 +2,8 @@ from flask import Flask, redirect, render_template, request, flash, jsonify
 from flask_cors import CORS
 from dataclasses import asdict
 import docker_py
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "TEMP"
