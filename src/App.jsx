@@ -14,7 +14,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/login', {
+      const response = await axios.post('http://localhost:5000/api/login', {
         username,
         password,
       });
@@ -66,7 +66,7 @@ function Register() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/Register', {
+      const response = await axios.post('http://localhost:5000/api/register', {
         username,
         password,
       });
