@@ -1,0 +1,30 @@
+<head>
+	<meta charset="UTF-8">
+	<title>create container</title>
+	<link rel="stylesheet" href = "{{url_for("static", filename = "style.css")}}">
+</head>
+<body>
+	<center>
+		{% for message in get_flashed_messages() %}
+				<h1 id="msg">{{message}}</h1>
+		{% endfor %}
+		<h1 class="title">create container</h1>
+		<form action="/create_container" method="POST">
+			<table>
+				<tbody>
+					<tr>
+						<td>image: </td>
+						<td><input name="image" id="image" type="text" required maxlength="64"/></td>
+					</tr>
+					<tr>
+						<td>container name: </td>
+						<td><input name="name" id="description" type="text" required maxlength="64"/></td>
+					</tr>
+					<tr>
+						<td><input name="submit" type="submit" value="create_container" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</center>
+</body>

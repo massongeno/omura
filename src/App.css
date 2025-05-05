@@ -43,8 +43,10 @@
 
 /* src/App.css */
 .container {
-  background-color: #f0f0f0;
-  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
 form {
@@ -72,6 +74,18 @@ button {
   cursor: pointer;
 }
 
+.start-button {
+  background-color: #007cdb;
+}
+
+.stop-button {
+  background-color: #004a8a;
+}
+
+.delete-button {
+  background-color: #003270;
+}
+
 button:hover {
   background-color: #0a48ac;
 }
@@ -81,4 +95,6 @@ p {
   font-size: 14px;
 }
 
-
+.container-card.selected {
+  border: 1px solid #0062ff;
+}
