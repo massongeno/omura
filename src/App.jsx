@@ -49,6 +49,9 @@ function Login() {
         <button className="button" type="submit">
           Login
         </button>
+        <button className="button" type="button" onClick={() => navigate('/register')}>
+          Register
+        </button>
       </form>
 
       {message && <p>{message}</p>}
@@ -99,6 +102,9 @@ function Register() {
         />
         <button className="button" type="submit">
           Register
+        </button>
+        <button className="button" type="button" onClick={() => navigate('/login')}>
+          Back to Login Screen
         </button>
       </form>
 
