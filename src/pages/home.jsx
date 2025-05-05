@@ -134,9 +134,6 @@ export default function Home() {
             </button>
           </div>
         </div>
-
-        {error && <div className="error-message">{error}</div>}
-
         <div className="container-grid">
           {containers.length > 0 ? (
             containers.map((container) => (
